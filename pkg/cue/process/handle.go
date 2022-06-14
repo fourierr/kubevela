@@ -42,6 +42,7 @@ type Context interface {
 	PushData(key string, data interface{})
 	GetCtx() context.Context
 	SetCtx(context.Context)
+	SetCtxWithValue(key, value interface{})
 }
 
 // Auxiliary are objects rendered by definition template.
@@ -332,6 +333,11 @@ func (ctx *templateContext) SetCtx(newContext context.Context) {
 		return
 	}
 	ctx.ctx = newContext
+}
+
+// SetCtxWithValue set context with <key, value>
+func (ctx *templateContext) SetCtxWithValue(key, value interface{}) {
+	ctx.ctx = context.WithValue(ctx.ctx, key, value)
 }
 
 func structMarshal(v string) string {
